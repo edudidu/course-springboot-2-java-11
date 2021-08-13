@@ -11,6 +11,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "tb_user")// precisiy fazer isso por que Order é uma palavra reservada do java
 public class User implements Serializable {
@@ -27,6 +29,7 @@ public class User implements Serializable {
 	
 	//Caso de lista collectins não se coloca o SET só o GET
 	
+	@JsonIgnore //tem que colocar isso por que como existe associação entre order e user  e user e order dava loop
 	@OneToMany(mappedBy = "client") //é a variavel declarada na classe Order com relação classe user 
 	private List<Order> orders = new ArrayList<>();
 	
