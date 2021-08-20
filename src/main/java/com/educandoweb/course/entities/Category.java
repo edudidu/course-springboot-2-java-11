@@ -8,24 +8,27 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
-import javax.persistence.Transient;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "tb_category")
 public class Category implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String name;
 	
-	@Transient
+    @JsonIgnore //como é uma associação com produto e categoria .. na hora de chmar o JSON tava dando loop por isso precisa colocar isso
+    @ManyToMany(mappedBy = "categories") //esse categories é da lista que tem la na Classe Produto
 	private Set<Product> products = new HashSet<>();
-	
-	public Category () {
+
+	public Category() {
 	}
 
 	public Category(Long id, String name) {
@@ -49,7 +52,7 @@ public class Category implements Serializable {
 	public void setName(String name) {
 		this.name = name;
 	}
-	
+
 	public Set<Product> getProducts() {
 		return products;
 	}
@@ -79,6 +82,4 @@ public class Category implements Serializable {
 		return true;
 	}
 
-
-	
 }
