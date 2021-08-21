@@ -104,6 +104,16 @@ public class Order implements Serializable {
 	public void setPayment(Payment payment) {
 		this.payment = payment;
 	}
+	
+	//Aqui é um método mas como o servidor rest so aceita get então precisou fazer assim padrão Java EE
+	public Double getTotal() {
+		double sum = 0;
+		for (OrderItem x : items) {
+			sum += x.getSubTotal();
+		}
+		return sum;
+	}
+	
 
 	@Override
 	public int hashCode() {
